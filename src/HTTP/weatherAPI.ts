@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { IWeatherJSON } from '../types/weatherJSON';
-import { ICity } from '../types/city';
+import { ICityAPI } from '../stores/stores';
 
 export function getWeatherForecasts({
   cityDatas,
 }: {
-  cityDatas: ICity | null;
+  cityDatas: ICityAPI | null;
 }) {
   return new Promise<IWeatherJSON>((resolve, reject) => {
     const weatherData = {
@@ -17,7 +17,7 @@ export function getWeatherForecasts({
 
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?&units=metric&lat=${cityDatas?.location.latitude}&lon=${cityDatas?.location.longitude}&appid=147b1ccda52637b3e703a5c4451e2652`
+        `https://api.openweathermap.org/data/2.5/weather?&units=metric&lat=${cityDatas?.lon}&lon=${cityDatas?.lat}&appid=147b1ccda52637b3e703a5c4451e2652`
       )
       .then((response) => {
         weatherData.city = response.data.name;

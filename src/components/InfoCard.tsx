@@ -1,39 +1,24 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from '@mui/material';
-import { FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa';
-import { checkForCity } from '../utils/dummyBackend';
-import { useCityStore } from '../stores/stores';
-import { ICity } from '../types/city';
+import { Typography } from '@mui/material';
 
 const fontStyle = {
   color: 'white',
   textShadow: '0px 5px 2px rgba(0,0,0,0.1)',
 };
+
 const CityHeader = ({ city }: { city: string }) => {
   const headerStyle = {
+    backgroundColor: 'rgba(255,255,255, 0.2)',
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
     padding: '3px',
   };
   return (
-    <div style={headerStyle}>
-      <FaMapMarkerAlt color={'white'}></FaMapMarkerAlt>
+    <>
       <Typography margin={0} fontSize={20} style={fontStyle}>
         {city}
       </Typography>
-      <FaChevronRight
-        color={'white'}
-        onClick={() => {
-          return console.log('scegli la città');
-        }}
-      ></FaChevronRight>
-    </div>
+    </>
   );
 };
 
@@ -64,27 +49,6 @@ const InfoCard = ({
         <Typography marginTop={0} style={fontStyle}>
           Sunday | 12 Dec 2023
         </Typography>
-        <FormControl variant="standard" style={fontStyle}>
-          <InputLabel style={fontStyle}>City</InputLabel>
-          <Select
-            style={fontStyle}
-            onChange={(e) => {
-              const value: string = e.target.value as string;
-              console.log(value);
-              const cityLocation: ICity = {
-                cityName: value,
-                location: {
-                  latitude: checkForCity({ cityName: value })?.latitude,
-                  longitude: checkForCity({ cityName: value })?.longitude,
-                },
-              };
-              useCityStore.setState({ cityData: cityLocation });
-            }}
-          >
-            <MenuItem value="New York">New York</MenuItem>
-            <MenuItem value="Rome">Rome</MenuItem>
-          </Select>
-        </FormControl>
       </div>
     </>
   );

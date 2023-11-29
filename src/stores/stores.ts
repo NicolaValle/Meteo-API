@@ -1,20 +1,34 @@
-import { create } from "zustand";
-import { IUser } from "../types/user";
-import { ICity } from "../types/city";
+import { create } from 'zustand';
+import { IUser } from '../types/user';
+import { number } from 'yargs';
 
 interface IAuthStore {
-    userData: IUser['data'] | null
+  userData: IUser['data'] | null;
 }
 
-interface ICityStore {
-    cityData: ICity | null
+export interface ICity {
+  cityName: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+interface ILocalNames {
+  [key: string]: string;
+}
+
+export interface ICityAPI {
+  name: string;
+  local_names: ILocalNames;
+  lat: number;
+  lon: number;
+  country: string;
+  state: string;
 }
 
 export const useAuthStore = create<IAuthStore>(() => ({
-    userData: null,
+  userData: null,
 }));
 
-export const useCityStore = create<ICityStore>(() => ({
-    cityData: {cityName:'Rome', location: {latitude: '41.902782', longitude: '12.496366'} },
-}))
-
+export const useCityArrayStore = create<ICityAPI[]>(() => []);
